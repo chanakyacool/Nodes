@@ -1,0 +1,24 @@
+<% include partials/header %>
+<h1> Add Customer </h1>
+<form action="/users/add" method="POST">
+  <label for="first_name">First Name</label>
+  <br>
+  <input type="text" name="first_name">
+  <br>
+  <label for="last_name">Last Name</label>
+  <br>
+  <input type="text" name="last_name">
+  <br>
+  <label for="email">Email</label>
+  <br>
+  <input type="text" name="email">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+<p><%= title %></p>
+<ul>
+    <% users.forEach((user) => { %>
+    <li> <%= user.first_name %> <%= user.last_name %> (<%= user.email %> ) - <a href="#" class="delete_user" data-id="<%= user._id %>">Delete</a></li>
+    <% }); %>
+</ul>
+<% include partials/footer %>

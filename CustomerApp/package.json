@@ -1,0 +1,21 @@
+{
+  "name": "customerapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "^2.6.1",
+    "express": "*",
+    "express-validator": "^5.2.0",
+    "mongodb": "^3.0.10",
+    "mongojs": "^2.6.0",
+    "nodemon": "^1.17.5"
+  },
+  "author": "Chanakya",
+  "license": "ISC"
+}
