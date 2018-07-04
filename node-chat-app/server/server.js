@@ -25,6 +25,18 @@ io.on('connection', (socket) => {
     console.log('User was disconnected');
   })
 
+  socket.emit('newMessage', {
+    from: 'admin@example.com',
+    text: 'Welcome to the chat app',
+    createdAt: new Date().getTime()
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New user joined',
+    createdAt: new Date().getTime()
+  });
+
   // socket.emit('newEmail', {
   //   from: 'user@example.com',
   //   text: 'This is socket email',
@@ -35,14 +47,28 @@ io.on('connection', (socket) => {
   //   console.log("New email", newEmail);
   // })
 
-  socket.emit('newMessage', {
-    from: 'chan',
-    text: 'This is first message',
-    createdAt: new Date()
-  });
+  // socket.emit('newMessage', {
+  //   from: 'chan',
+  //   text: 'This is first message',
+  //   createdAt: new Date().getTime()
+  // });
 
   socket.on('createMessage', (message) => {
-    console.log('message from client', message)
+    console.log('new from client', message)
+    // Socket emits to single connection
+    // io emits to every connection
+
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    })
+    // socket.broadcast.emit('newMessage', {
+    // // broadcast skips the emit to sender to all other    
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // })
   })
 });
 

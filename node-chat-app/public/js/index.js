@@ -7,10 +7,10 @@ socket.on('connect', function (){
   //   text: 'This is fromt he cloent side'
   // })
 
-  socket.emit('createMessage', {
-    from: 'nuick',
-    text: 'This is first message from the client'
-  })
+  // socket.emit('createMessage', {
+  //   from: 'nuick',
+  //   text: 'This is first message from the client'
+  // })
   
 });
 
