@@ -2,6 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
+const {generateMessage} = require('./utils/message')
 
 const publicPath = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000;
@@ -25,50 +26,16 @@ io.on('connection', (socket) => {
     console.log('User was disconnected');
   })
 
-  socket.emit('newMessage', {
-    from: 'admin@example.com',
-    text: 'Welcome to the chat app',
-    createdAt: new Date().getTime()
-  });
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
-  socket.broadcast.emit('newMessage', {
-    from: 'Admin',
-    text: 'New user joined',
-    createdAt: new Date().getTime()
-  });
-
-  // socket.emit('newEmail', {
-  //   from: 'user@example.com',
-  //   text: 'This is socket email',
-  //   createdAt: 1234
-  // });
-
-  // socket.on('createEmail', (newEmail) => {
-  //   console.log("New email", newEmail);
-  // })
-
-  // socket.emit('newMessage', {
-  //   from: 'chan',
-  //   text: 'This is first message',
-  //   createdAt: new Date().getTime()
-  // });
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User joined'));
 
   socket.on('createMessage', (message) => {
     console.log('new from client', message)
     // Socket emits to single connection
     // io emits to every connection
 
-    io.emit('newMessage', {
-      from: message.from,
-      text: message.text,
-      createdAt: new Date().getTime()
-    })
-    // socket.broadcast.emit('newMessage', {
-    // // broadcast skips the emit to sender to all other    
-    //   from: message.from,
-    //   text: message.text,
-    //   createdAt: new Date().getTime()
-    // })
+    io.emit('newMessage', generateMessage(message.from, message.text))
   })
 });
 
