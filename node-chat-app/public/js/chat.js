@@ -102,7 +102,6 @@ $(document).ready(function(){
 
     var messageTextBox =  $('[name=message]')
     socket.emit('createMessage', {
-      from: 'User',
       text: messageTextBox.val()
     }, function(){
       // clear the value after the message
