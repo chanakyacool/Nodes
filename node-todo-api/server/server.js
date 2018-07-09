@@ -122,25 +122,49 @@ app.get('/users/me', authenticate, (req, res) => {
 });
 
 // POST
-app.post('/users/login', (req, res) => {
-  var body = _.pick(req.body, ['email', 'password'])
-  User.findByCredentials(body.email, body.password).then((user) => {
-    user.generateAuthToken().then((token) => {
-      res.header('x-auth', token).send(user);
-    });
-  }).catch((e) => {
+// app.post('/users/login', (req, res) => {
+//   var body = _.pick(req.body, ['email', 'password'])
+//   User.findByCredentials(body.email, body.password).then((user) => {
+//     user.generateAuthToken().then((token) => {
+//       res.header('x-auth', token).send(user);
+//     });
+//   }).catch((e) => {
+//     res.status(400).send();
+//   });
+// });
+
+// ASync
+app.post('/users/login', async (req, res) => {
+ try {
+  const body = await _.pick(req.body, ['email', 'password'])
+  const user = await User.findByCredentials(body.email, body.password);
+  const token = await user.generateAuthToken();
+  res.header('x-auth', token).send(user);
+ } catch(e) {
     res.status(400).send();
-  });
+  };
 });
 
+
 // DELETE 
-app.delete('/users/logout', authenticate, (req, res) => {
-  req.user.removeToken(req.token).then(() => {
+// app.delete('/users/logout', authenticate, (req, res) => {
+//   req.user.removeToken(req.token).then(() => {
+//     res.status(200).send();
+//   }, () => {
+//     res.status(400).send();
+//   })
+// });
+
+// ASync
+app.delete('/users/logout', authenticate, async (req, res) => {
+  try {
+    await req.user.removeToken(req.token)
     res.status(200).send();
-  }, () => {
+  } catch(e) {
     res.status(400).send();
-  })
+  }
 });
+
 
 app.listen(port, () => {
   console.log(`Server is up on ${port}`);

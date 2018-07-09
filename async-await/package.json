@@ -1,0 +1,16 @@
+{
+  "name": "async-await",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app-promises.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "nodemon": "^1.17.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
